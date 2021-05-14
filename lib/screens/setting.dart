@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/utilities/app_drawer.dart';
 import 'package:vtplrs/utilities/constant.dart';
 
 class Setting extends StatefulWidget {
-  Setting({Key key}) : super(key: key);
-
+  Setting({this.user});
+  final User user;
   @override
   _SettingState createState() => _SettingState();
 }
@@ -16,7 +17,7 @@ class _SettingState extends State<Setting> {
     return Container(
       child: Scaffold(
         backgroundColor: kButtonColor,
-        drawer: Load_Drawer(),
+        drawer: Load_Drawer(user: widget.user),
         appBar: AppBar(
           title: Text(
             "Settings",

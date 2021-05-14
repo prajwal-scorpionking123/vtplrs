@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vtplrs/mappers/User.dart';
+import 'package:vtplrs/screens/Add_Vehicle.dart';
 import 'package:vtplrs/screens/dashboard_screen.dart';
 import 'package:vtplrs/screens/home_screen.dart';
 import 'package:vtplrs/screens/location_history.dart';
@@ -8,13 +10,18 @@ import 'package:vtplrs/screens/setting.dart';
 import 'package:vtplrs/screens/vehicle_detail.dart';
 import 'constant.dart';
 
-class Load_Drawer extends StatelessWidget {
-  const Load_Drawer({
-    Key key,
-  }) : super(key: key);
+class Load_Drawer extends StatefulWidget {
+  const Load_Drawer({this.user});
+  final User user;
 
   @override
+  _Load_DrawerState createState() => _Load_DrawerState();
+}
+
+class _Load_DrawerState extends State<Load_Drawer> {
+  @override
   Widget build(BuildContext context) {
+    String name = widget.user.name;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -24,7 +31,7 @@ class Load_Drawer extends StatelessWidget {
               color: Colors.blue,
             ),
             child: Text(
-              'User',
+              "$name",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -36,7 +43,7 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Home', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Dashboard();
+                return Dashboard(user: widget.user);
               }));
             },
           ),
@@ -45,7 +52,7 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Profile', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Profile_Page();
+                return Profile_Page(user: widget.user);
               }));
             },
           ),
@@ -54,7 +61,16 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Location History', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Location_History();
+                return Location_History(user: widget.user);
+              }));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.bike_scooter),
+            title: Text('Add Vehicle', style: TextStyle(color: kAppColor)),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Add_Vehicle(user: widget.user);
               }));
             },
           ),
@@ -63,7 +79,7 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Vehicle Details', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Vehicle_Detail();
+                return Vehicle_Detail(user: widget.user);
               }));
             },
           ),
@@ -72,7 +88,7 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Report Theft', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Report_Thief();
+                return Report_Thief(user: widget.user);
               }));
             },
           ),
@@ -81,7 +97,7 @@ class Load_Drawer extends StatelessWidget {
             title: Text('Settings', style: TextStyle(color: kAppColor)),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Setting();
+                return Setting(user: widget.user);
               }));
             },
           ),

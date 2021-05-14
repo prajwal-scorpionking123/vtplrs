@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/utilities/constant.dart';
 import "package:vtplrs/utilities/input_field.dart";
 import '../utilities/app_drawer.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Profile_Page extends StatelessWidget {
+class Profile_Page extends StatefulWidget {
+  const Profile_Page({this.user});
+  final User user;
+
+  @override
+  _Profile_PageState createState() => _Profile_PageState();
+}
+
+class _Profile_PageState extends State<Profile_Page> {
+  String name, email;
+  int phoneNo, age;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    name = widget.user.name;
+    phoneNo = widget.user.phoneNo;
+    email = widget.user.email;
+    age = widget.user.age;
+  }
+
   @override
   Widget build(BuildContext context) {
     var kProfiltextStyle = TextStyle(color: kAppColor, fontSize: 20);
     var kContainerColors = Colors.black;
     return Container(
       child: Scaffold(
-        drawer: Load_Drawer(),
+        drawer: Load_Drawer(user: widget.user),
         appBar: AppBar(
           title: Text(
             "Profile",
@@ -42,7 +62,7 @@ class Profile_Page extends StatelessWidget {
                       color: kAppColor,
                     ),
                     SizedBox(width: 20),
-                    Text("USER", style: kProfiltextStyle)
+                    Text("$name", style: kProfiltextStyle)
                   ],
                 ),
               ),
@@ -57,7 +77,7 @@ class Profile_Page extends StatelessWidget {
                       color: kAppColor,
                     ),
                     SizedBox(width: 20),
-                    Text("+91 123 456 789", style: kProfiltextStyle)
+                    Text("$phoneNo", style: kProfiltextStyle)
                   ],
                 ),
               ),
@@ -72,7 +92,7 @@ class Profile_Page extends StatelessWidget {
                       color: kAppColor,
                     ),
                     SizedBox(width: 20),
-                    Text("abc@gmail.com", style: kProfiltextStyle)
+                    Text("$email", style: kProfiltextStyle)
                   ],
                 ),
               ),
@@ -87,40 +107,10 @@ class Profile_Page extends StatelessWidget {
                       color: kAppColor,
                     ),
                     SizedBox(width: 20),
-                    Text("21", style: kProfiltextStyle)
+                    Text("$age", style: kProfiltextStyle)
                   ],
                 ),
               ),
-              Container(
-                color: kContainerColors,
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                child: Row(
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.venusMars,
-                      color: kAppColor,
-                    ),
-                    SizedBox(width: 20),
-                    Text("venus-mars", style: kProfiltextStyle)
-                  ],
-                ),
-              ),
-              Container(
-                color: kContainerColors,
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                child: Row(
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.addressCard,
-                      color: kAppColor,
-                    ),
-                    SizedBox(width: 20),
-                    Text("xys sysb sseec  aba s", style: kProfiltextStyle)
-                  ],
-                ),
-              )
             ],
           ),
         ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/utilities/app_drawer.dart';
 import 'package:vtplrs/utilities/constant.dart';
 
 class Report_Thief extends StatefulWidget {
-  Report_Thief({Key key}) : super(key: key);
-
+  Report_Thief({this.user});
+  final User user;
   @override
   _Report_ThiefState createState() => _Report_ThiefState();
 }
@@ -15,7 +16,7 @@ class _Report_ThiefState extends State<Report_Thief> {
     return Container(
       child: Scaffold(
         backgroundColor: kButtonColor,
-        drawer: Load_Drawer(),
+        drawer: Load_Drawer(user: widget.user),
         appBar: AppBar(
           title: Text(
             "Report Theft",

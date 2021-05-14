@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:vtplrs/screens/dashboard_screen.dart';
 import 'package:vtplrs/screens/loading_screen.dart';
+import 'package:vtplrs/screens/login_screen.dart';
+import 'package:vtplrs/services/RegistrationService.dart';
 import 'package:vtplrs/utilities/constant.dart';
 import 'package:vtplrs/utilities/input_field.dart';
 import 'dart:convert';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class UserRegister extends StatefulWidget {
   @override
@@ -12,12 +15,48 @@ class UserRegister extends StatefulWidget {
 
 class _UserRegisterState extends State<UserRegister> {
   String name;
-  String device_id;
-  String pass;
-  String email_id;
-  String phone;
-  String dob;
-  String address;
+  String password;
+  String email;
+  String phoneNo;
+  String age;
+  String deviceId;
+  void registerUser() async {
+    RegistrationService registrationService = new RegistrationService(
+        name: name,
+        password: password,
+        email: email,
+        phoneNo: phoneNo,
+        age: age,
+        deviceId: deviceId);
+    try {
+      var status = await registrationService.doRegistration();
+      if (status == true) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return UserLogin();
+        }));
+      } else {
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "ALERT",
+          desc: "Something Went Wrong",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Try Again",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      }
+      print(status);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +68,11 @@ class _UserRegisterState extends State<UserRegister> {
           padding: EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
-              // Container(
-              //     alignment: Alignment.center,
-              //     padding: EdgeInsets.all(10),
-              //     child: Text(
-              //       'Registration',
-              //       style: TextStyle(
-              //           color: Colors.black,
-              //           fontWeight: FontWeight.w500,
-              //           fontSize: 30),
-              //     )),
               Input_Field(
-                labal_text: "Enter Device Id",
+                labal_text: "Device-Id",
                 onChange: (value) {
                   setState(() {
-                    device_id = value;
+                    deviceId = value;
                   });
                 },
               ),
@@ -56,10 +85,10 @@ class _UserRegisterState extends State<UserRegister> {
                 },
               ),
               Input_Field(
-                labal_text: "Enter email id",
+                labal_text: "Enter Email",
                 onChange: (value) {
                   setState(() {
-                    email_id = value;
+                    email = value;
                   });
                 },
               ),
@@ -67,7 +96,7 @@ class _UserRegisterState extends State<UserRegister> {
                 labal_text: "Enter password",
                 onChange: (value) {
                   setState(() {
-                    pass = value;
+                    password = value;
                   });
                 },
               ),
@@ -75,24 +104,16 @@ class _UserRegisterState extends State<UserRegister> {
                 labal_text: "Enter phone number",
                 onChange: (value) {
                   setState(() {
-                    phone = value;
+                    phoneNo = value;
                   });
                 },
               ),
               Input_Field(
-                labal_text: "Enter Date of Birth",
-                hint_text: "dd/mm/yyyy",
+                labal_text: "Enter Age",
+                hint_text: "",
                 onChange: (value) {
                   setState(() {
-                    dob = value;
-                  });
-                },
-              ),
-              Input_Field(
-                labal_text: "Enter Address",
-                onChange: (value) {
-                  setState(() {
-                    address = value;
+                    age = value;
                   });
                 },
               ),
@@ -106,10 +127,7 @@ class _UserRegisterState extends State<UserRegister> {
                     child: Text('Register',
                         style: TextStyle(color: kAppColor, fontSize: 20)),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Dashboard();
-                      }));
+                      registerUser();
                     },
                   )),
             ],
