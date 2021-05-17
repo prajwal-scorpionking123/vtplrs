@@ -1,11 +1,18 @@
 import 'package:geocoder/geocoder.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vtplrs/mappers/Location.dart';
+import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vtplrs/services/LocationService.dart';
 
 class LoadingScreen extends StatefulWidget {
+  LoadingScreen({this.user, this.lat, this.long, this.area});
+  String area;
+  double lat;
+  double long;
+  User user;
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
@@ -14,8 +21,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     fetchHistory();
+    createMarkers();
+    print(markers);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Dashboard(
+        user: widget.user,
+        lat: widget.lat,
+        long: widget.long,
+        area: widget.area,
+      );
+    }));
   }
 
+  Set<Marker> markers;
   //
   List<LocationMapper> _historyList;
   bool loader;
@@ -66,6 +84,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     //print
     print(_cities);
+  }
+
+//creating markers;
+  void createMarkers() async {
+    int i = 0;
+    await Future.wait(_historyList.map((element) async {
+      setState(() {
+        markers.add(Marker(
+            markerId: MarkerId(element.id),
+            position:
+                LatLng(double.parse(element.lat), double.parse(element.long)),
+            draggable: true,
+            infoWindow: InfoWindow(title: _cities[i], snippet: "Local Area")));
+        i++;
+      });
+    }));
   }
   // lat=21.25
   //long=79.1

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:vtplrs/mappers/User.dart';
+import 'package:vtplrs/screens/PdfViewerPage.dart';
+import 'package:vtplrs/services/PDFApi.dart';
 import 'package:vtplrs/utilities/app_drawer.dart';
 import 'package:vtplrs/utilities/constant.dart';
 
@@ -11,6 +15,9 @@ class Report_Thief extends StatefulWidget {
 }
 
 class _Report_ThiefState extends State<Report_Thief> {
+  void openPDF(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+      );
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,10 +39,20 @@ class _Report_ThiefState extends State<Report_Thief> {
                       width: 300,
                       child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "F.I.R. Format",
-                            style: TextStyle(color: kAppColor, fontSize: 21),
-                          ))),
+                          child: TextButton(
+                              child: Text("F.I.R. Format",
+                                  style: TextStyle(
+                                      color: kAppColor, fontSize: 21)),
+                              onPressed: () async {
+                                var url = Uri(
+                                    scheme: 'http',
+                                    host: '10.0.2.2',
+                                    port: 4000,
+                                    path: '/payload/getComplaintFormat');
+
+                                final file = await PDFApi.loadNetwork(url);
+                                openPDF(context, file);
+                              }))),
                 ),
                 Card(
                   child: Container(

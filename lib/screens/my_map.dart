@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:uuid/uuid.dart';
 import 'package:vtplrs/mappers/Location.dart';
 import 'package:vtplrs/services/LocationService.dart';
 
@@ -22,7 +21,6 @@ class _Load_MapState extends State<Load_Map> {
   String ar;
   double lt;
   double lg;
-  var uuid = Uuid();
 
   final LatLng _center = const LatLng(20.5937, 78.9629);
   @override
@@ -52,6 +50,7 @@ class _Load_MapState extends State<Load_Map> {
   @override
   void dispose() {
     // TODO: implement dispose
+    _marker.clear();
     super.dispose();
   }
 

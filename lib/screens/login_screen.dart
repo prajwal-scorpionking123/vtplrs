@@ -4,6 +4,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:vtplrs/mappers/Location.dart';
+import 'package:vtplrs/screens/RecoverPasswordScreen.dart';
 import 'package:vtplrs/screens/loading_screen.dart';
 import 'package:vtplrs/services/LocationService.dart';
 import 'package:vtplrs/services/LoginService.dart';
@@ -139,6 +140,11 @@ class _UserLoginState extends State<UserLogin> {
                       loginUser();
                     },
                   )),
+              RaisedButton(onPressed:() {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RecoverPassword();
+                }));
+              }, child: Text("Forgot Password?"))
             ],
           )),
     );

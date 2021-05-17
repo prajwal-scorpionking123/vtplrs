@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:uuid/uuid.dart';
 import 'package:vtplrs/mappers/Location.dart';
 import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/screens/home_screen.dart';
@@ -17,12 +16,13 @@ class Dashboard extends StatefulWidget {
   String area;
   double lat;
   double long;
-
-  Dashboard(
-      {this.user,
-      this.lat = 21.1962504,
-      this.long = 79.0712471,
-      this.area = "Farid Nagar"});
+  // Set<Marker> markers;
+  Dashboard({
+    this.user,
+    this.lat = 21.1962504,
+    this.long = 79.0712471,
+    this.area = "Farid Nagar",
+  });
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
   User userData;
   Marker marker;
   bool loader;
-  var uuid = Uuid();
+
   //this init
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _DashboardState extends State<Dashboard> {
     print(widget.area);
     print(widget.lat);
     marker = new Marker(
-      markerId: MarkerId(uuid.v1()),
+      markerId: MarkerId("id-1"),
       position: LatLng(widget.lat, widget.long),
       draggable: true,
       infoWindow: InfoWindow(title: "${widget.area}", snippet: "Local Area"),
