@@ -1,6 +1,6 @@
 # vtplrs
 
-A new Flutter application.
+VTPLRS is the location Reporting Android App which will track the real time location of the vehicle and generate notification based on the algorithm provided in app.
 
 ## Getting Started
 
