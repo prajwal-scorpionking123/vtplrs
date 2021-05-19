@@ -50,7 +50,7 @@ class _Load_MapState extends State<Load_Map> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _marker.clear();
+    // _marker.clear();
     super.dispose();
   }
 

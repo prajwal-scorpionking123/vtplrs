@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vtplrs/mappers/User.dart';
 import 'package:vtplrs/screens/Add_Vehicle.dart';
+import 'package:vtplrs/screens/LocationHistoryMap.dart';
 import 'package:vtplrs/screens/dashboard_screen.dart';
 import 'package:vtplrs/screens/home_screen.dart';
 import 'package:vtplrs/screens/location_history.dart';
@@ -53,6 +54,16 @@ class _Load_DrawerState extends State<Load_Drawer> {
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Profile_Page(user: widget.user);
+              }));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.location_history_rounded),
+            title: Text('Location History Map',
+                style: TextStyle(color: kAppColor)),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LocationHistoryMap(user: widget.user);
               }));
             },
           ),
